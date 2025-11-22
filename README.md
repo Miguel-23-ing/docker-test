@@ -15,7 +15,7 @@ Contenido del README
 - Comandos útiles (build, run, stop, remove)
 - Espacios para capturas (Docker Desktop, app corriendo, workflow, secrets, consola)
 
-1. Qué se hizo (resumen)
+## 1. Qué se hizo (resumen)
 -------------------------
 
 1. Se creó un `Dockerfile` multi-stage que construye la app con Node y sirve los archivos estáticos con `nginx`.
@@ -23,7 +23,7 @@ Contenido del README
 3. Se configuraron los secrets `DOCKER_USERNAME` y `DOCKER_PASSWORD` (token de Docker Hub con permisos Read & Write) en el repositorio.
 4. Se probó la imagen localmente y también se confirmó que la imagen pública fue subida a Docker Hub (`miguel23ing/react-app:latest`).
 
-2. Requisitos
+## 2. Requisitos
 ------------
 
 - `git`
@@ -31,7 +31,7 @@ Contenido del README
 - Cuenta en Docker Hub (para publicar la imagen)
 - Secrets configurados en el repositorio de GitHub
 
-3. Archivos importantes
+## 3. Archivos importantes
 -----------------------
 
 - `Dockerfile` (en la raíz)
@@ -59,7 +59,7 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-5. Workflow de GitHub Actions
+## 5. Workflow de GitHub Actions
 ----------------------------
 
 Ruta: `.github/workflows/docker-build-push.yml`
@@ -97,16 +97,18 @@ jobs:
 					push: true
 					tags: ${{ secrets.DOCKER_USERNAME }}/react-app:latest
 ```
+![alt text](image.png)
 
-6. Crear el token en Docker Hub y añadirlo como secret en GitHub
+## 6. Crear el token en Docker Hub y añadirlo como secret en GitHub
 --------------------------------------------------------------
 
 1. En Docker Hub → `Settings` → `Security` → `Access Tokens` → `Create` → seleccionar permisos **Read & Write** → copiar token.
 2. En GitHub → repo → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`:
 	 - `DOCKER_USERNAME` = tu usuario de Docker Hub (ej: `miguel23ing`)
 	 - `DOCKER_PASSWORD` = el token que copiaste
+![alt text](image-1.png)
 
-7. Cómo probar localmente
+## 7. Cómo probar localmente
 -------------------------
 
 Build y ejecutar localmente (desde la raíz del repo):
@@ -124,8 +126,14 @@ docker pull miguel23ing/react-app:latest
 docker run -dp 8080:80 --name react-app-remote miguel23ing/react-app:latest
 # Abrir http://localhost:8080
 ```
+![alt text](image-2.png)
+![alt text](image-3.png)
 
-8. Comandos útiles
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
+## 8. Comandos útiles
 ------------------
 
 - Listar contenedores en ejecución: `docker ps`
@@ -134,43 +142,4 @@ docker run -dp 8080:80 --name react-app-remote miguel23ing/react-app:latest
 - Eliminar: `docker rm <CONTAINER_NAME>`
 - Eliminar imagen local: `docker rmi <IMAGE>`
 
-9. Seguridad
------------
 
-- Usa tokens con permisos mínimos necesarios. Si un token queda expuesto, revócalo inmediatamente en Docker Hub (Settings → Security → Access Tokens).
-- En CI usa `Secrets` de GitHub, nunca metas tokens directamente en el código o en capturas públicas.
-
-10. Capturas (añade tus imágenes aquí)
--------------------------------------
-
-- Docker Desktop (pantallazo):
-
-	![Docker Desktop](./docs/screenshots/docker-desktop.png)
-
-- App corriendo en el navegador (http://localhost:8080):
-
-	![App en ejecución](./docs/screenshots/app-running.png)
-
-- Executando `docker pull` / `docker run` en la consola:
-
-	![Consola Pull Run](./docs/screenshots/console-pull-run.png)
-
-- Workflow en GitHub Actions (logs / ejecución):
-
-	![Workflow Actions](./docs/screenshots/github-actions.png)
-
-- Secrets en GitHub (pantallazo):
-
-	![GitHub Secrets](./docs/screenshots/github-secrets.png)
-
-Notas finales
--------------
-
-Si quieres que yo añada las capturas al repo (`/docs/screenshots/`) y haga el commit, dímelo y las subiré por ti.
-
----
-
-Archivo actualizado automáticamente por el asistente.
-
-
-CI-trigger: 2025-11-22T15:53:20
